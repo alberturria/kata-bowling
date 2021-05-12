@@ -23,3 +23,14 @@ class GameTestCase(unittest.TestCase):
             game.roll(4)
 
         self.assertEquals(game.score(), expected_score, 'Should\'ve returned the correct score')
+
+    def test_when_running_a_strike_then_the_game_score_is_the_correct_one(self):
+        expected_score = 90
+        game = Game()
+
+        game.roll(10)
+
+        for index in range(18):
+            game.roll(4)
+
+        self.assertEquals(game.score(), expected_score, 'Should\'ve returned the correct score')
