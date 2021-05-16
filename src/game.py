@@ -18,9 +18,9 @@ class Game:
             if self._spare_bonus:
                 self._apply_spare_bonus(index)
 
-            if index < len(self._strikes) - 1 and self._strikes[index] == 10:
+            if index < len(self._strikes) - 1 and self._is_strike(index):
                 self._strike_bonus = True
-            elif index < len(self._strikes)-1 and self._strikes[index] + self._strikes[index + 1] == 10:
+            elif index < len(self._strikes)-1 and self._is_spare(index):
                 self._spare_bonus = True
 
             if index < len(self._strikes) - 1 and not self._strike_bonus:
@@ -28,10 +28,7 @@ class Game:
 
             self._score += self._strikes[index]
 
-            if self._strike_bonus:
-                index +=1
-            else:
-                index +=2
+            index = self._get_updated_index(index)
 
         return self._score
 
@@ -43,11 +40,19 @@ class Game:
         self._score += self._strikes[index]
         self._spare_bonus = False
 
+    def _is_strike(self, index):
+        return self._strikes[index] == 10
+
+    def _is_spare(self, index):
+        return self._strikes[index] + self._strikes[index + 1] == 10
+
     def _get_updated_index(self, index):
         if self._strike_bonus:
             index += 1
         else:
             index += 2
+
+        return index
 
 
 
